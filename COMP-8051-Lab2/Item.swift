@@ -1,6 +1,6 @@
 //
 //  Item.swift
-//  COMP-8051-Lab2
+//  COMP-8051-Lab1
 //
 //  Created by Jay Wang on 2024-01-19.
 //
