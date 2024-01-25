@@ -51,10 +51,12 @@ class Assignment1: SCNScene{
         initCamera()
         
         // Spawn a cube
-        spawnCube()
+        spawnCube(_SpawnPos: SCNVector3(0,0,0))
         
     }
-    
+    /*
+     Initialize a Node with Camera Properties, and attach it to the rootNode
+     */
     func initCamera(){
         
         // Create a Camera
@@ -74,7 +76,12 @@ class Assignment1: SCNScene{
         
     }
     
-    func spawnCube(){
+    /*
+     Spawns a cube at a given position
+     _SpawnPos: SCNVector3
+     The position that the cube will spawn at.
+     */
+    func spawnCube(_SpawnPos: SCNVector3){
         // Initialize an ObjectNode: of type Square, with length, width, and height set to 1.
         let _Cube = SCNNode(geometry: SCNBox(width: 1, height: 1,length: 1,chamferRadius: 0))
         
@@ -85,7 +92,7 @@ class Assignment1: SCNScene{
         _Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         
         // Set Cube Position
-        _Cube.position = SCNVector3(0,0,0)
+        _Cube.position = _SpawnPos
         
         // Attach ObjectNode to rootNode
         rootNode.addChildNode(_Cube)
