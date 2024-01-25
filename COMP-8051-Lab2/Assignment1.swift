@@ -117,7 +117,7 @@ class Assignment1: SCNScene{
             
             
             // Initialize a temporary Material assign a color and colorize
-            var tempMaterial = SCNMaterial()
+            let tempMaterial = SCNMaterial()
             tempMaterial.diffuse.contents = _Color
             
             // Actually assign material to the cube face
