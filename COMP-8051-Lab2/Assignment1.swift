@@ -36,10 +36,16 @@ class Assignment1: SCNScene{
     var _UpdateInterval = 10000
     
     // Current Rotation Angle
-    var rotAngle = 0.0
+    var _RotAngle = CGSize.zero
+    
+    // Drag Gesture Translation Offset
+    var _DragAngle = CGSize.zero
     
     // Boolean Toggle for Rotating
     var isRotating = true
+    
+    // Boolean indicator for whether _RotAngle is up-to-date after drag event
+    var isDragRotUpdated = true
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -178,23 +184,28 @@ class Assignment1: SCNScene{
     // Find SCNNode by Name (String), then rotates a given object by given the given amount, in radians.
     func rotateObject(_Name: String, _Radians: Double){
         
+        // Find SCNNode with respective Name
+        let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
+        
         if (isRotating){
-         
-            // Find SCNNode with respective Name
-            let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
             
-            //print(_SCNObject?.rotation.y)
+            // Updates _RotAngle if it is behind _DragAngle, once.
+            //updateRotAngle()
             
-            rotAngle += _Radians
+            // Rotation is Toggle, keep rotating
+            _RotAngle.width += _Radians
             
-            if rotAngle >= 360.0 {
-                rotAngle = 0
-            }
+            // Manipulate SCNObject
+            _SCNObject?.eulerAngles = SCNVector3(Double(_RotAngle.height), Double(_RotAngle.width), 0)
             
-            _SCNObject?.eulerAngles = SCNVector3(0, rotAngle, 0)
+            
+        } else {
+            
+            // Manipulate SCNObject
+            _SCNObject?.eulerAngles = SCNVector3(Double(_DragAngle.height/50), Double(_DragAngle.width/50), 0)
             
         }
-        
+                    
     }
     
     /*
@@ -207,7 +218,30 @@ class Assignment1: SCNScene{
         // Flip the Boolean. Toggle it
         isRotating = !isRotating
         
+    }
+    
+    /*
+     Drag Gesture Handler
+     Rotates the SCNObject by an offset, given by gesture.translation
+     */
+    @MainActor
+    func dragHandler(_Offset: CGSize){
         
+        // _RotAngle is now behind _DragAngle, so flip the boolean
+        isDragRotUpdated = false
+        
+        _DragAngle = _Offset
+        
+    }
+    
+    /*
+     Helper Function to detect and bring _RotAngle up to speed with _DragAngle
+     */
+    func updateRotAngle(){
+        if (isDragRotUpdated == false){
+            _DragAngle = _RotAngle
+        }
+        isDragRotUpdated = true
     }
     
 }

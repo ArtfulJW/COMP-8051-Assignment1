@@ -60,7 +60,7 @@ class ControlableRotatingCrate: SCNScene {
     func reanimate() {
         let theCube = rootNode.childNode(withName: "The Cube", recursively: true) // Get the cube object by its name (This is where line 45 comes in)
         if (isRotating) {
-            rot.width += 0.05 // Increment rotation of the cube by 0.0005 radians
+            rot.width += 0.0005 // Increment rotation of the cube by 0.0005 radians
         } else {
             rot = rotAngle // Let the rot variable follow the drag gesture
         }
