@@ -29,8 +29,66 @@ class Assignment1: SCNScene{
     /*
      Tentatively initialize a Node then later on, Assign a SCNCamera() to this Node. Which means, it gives this Node Camera Attributes.
      */
-    var cameraNode = SCNNode()
+    var _CameraNode = SCNNode()
     
+    // Catch if init() fails
+    required init?(coder aDecoder: NSCoder){
+        fatalError("init(coder:) has not been implemented")
+    }
     
+    /*
+     OnAwake or Scene Initializer. Runs this function immediately on startup.
+     */
+    override init(){
+        super.init()
+        
+        // Set the Background to black
+        background.contents = UIColor.yellow
+        
+        // Call Relevant Functions after this point for additonal content in the Scene.
+        
+        // Initialize Camera
+        initCamera()
+        
+        // Spawn a cube
+        spawnCube()
+        
+    }
+    
+    func initCamera(){
+        
+        // Create a Camera
+        let _Camera = SCNCamera()
+        
+        // Assign new Camera to _CameraNode
+        _CameraNode.camera = _Camera
+        
+        // Set Camera Position
+        _CameraNode.position = SCNVector3(5,5,5)
+        
+        // Set Pitch, Yaw, Roll to 0.
+        _CameraNode.eulerAngles = SCNVector3(-Float.pi/4,Float.pi/4,0)
+        
+        // Add camera node to Root Node
+        rootNode.addChildNode(_CameraNode)
+        
+    }
+    
+    func spawnCube(){
+        // Initialize an ObjectNode: of type Square, with length, width, and height set to 1.
+        let _Cube = SCNNode(geometry: SCNBox(width: 1, height: 1,length: 1,chamferRadius: 0))
+        
+        // Give the Object a name.
+        _Cube.name = "Cube"
+        
+        // Set the Cube Color to Blue
+        _Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        
+        // Set Cube Position
+        _Cube.position = SCNVector3(0,0,0)
+        
+        // Attach ObjectNode to rootNode
+        rootNode.addChildNode(_Cube)
+    }
     
 }
