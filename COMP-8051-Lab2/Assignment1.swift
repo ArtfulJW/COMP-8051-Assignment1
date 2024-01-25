@@ -8,8 +8,8 @@
 /*
  All work should be done individually.
 
- [][1 marks] Create an app that runs on an iOS device (you can assume at least iOS 14.0) with a single cube shown in perspective projection. Each side of the cube should have a separate colour, as shown in class.
- [][1 marks] Modify the app so a double-tap toggles whether the cube continuously rotates about the y-axis.
+ [x][1 marks] Create an app that runs on an iOS device (you can assume at least iOS 14.0) with a single cube shown in perspective projection. Each side of the cube should have a separate colour, as shown in class.
+ [x][1 marks] Modify the app so a double-tap toggles whether the cube continuously rotates about the y-axis.
  [][1 marks] Modify the app so when the cube is not rotating the user can rotate the cube about two axes using the touch interface (single finger drag).
  [][5 marks] Modify the app so when the cube is not rotating a “pinch” (two fingers moving closer or farther away from each other) zooms in and out of the cube.
  [][5 marks] Modify the app so when the cube is not rotating dragging with two fingers moves the cube around.
@@ -35,7 +35,11 @@ class Assignment1: SCNScene{
     // Nanosecond Intervals between each Update Call
     var _UpdateInterval = 10000
     
+    // Current Rotation Angle
     var rotAngle = 0.0
+    
+    // Boolean Toggle for Rotating
+    var isRotating = true
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -49,7 +53,7 @@ class Assignment1: SCNScene{
         super.init()
         
         // Set the Background to black
-        background.contents = UIColor.yellow
+        background.contents = UIColor.black
         
         // Call Relevant Functions after this point for additonal content in the Scene.
         
@@ -105,7 +109,7 @@ class Assignment1: SCNScene{
         _Cube.name = "Cube"
         
         // Set the Cube Color to Blue
-        _Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        //_Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
         
         // Set Cube Position
         _Cube.position = _SpawnPos
@@ -174,18 +178,35 @@ class Assignment1: SCNScene{
     // Find SCNNode by Name (String), then rotates a given object by given the given amount, in radians.
     func rotateObject(_Name: String, _Radians: Double){
         
-        // Find SCNNode with respective Name
-        let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
-        
-        print(_SCNObject?.rotation.y)
-        
-        rotAngle += _Radians
-        
-        if rotAngle > Double.pi {
-            rotAngle -= Double.pi
+        if (isRotating){
+         
+            // Find SCNNode with respective Name
+            let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
+            
+            //print(_SCNObject?.rotation.y)
+            
+            rotAngle += _Radians
+            
+            if rotAngle >= 360.0 {
+                rotAngle = 0
+            }
+            
+            _SCNObject?.eulerAngles = SCNVector3(0, rotAngle, 0)
+            
         }
         
-        _SCNObject?.eulerAngles = SCNVector3(0, rotAngle, 0)
+    }
+    
+    /*
+     Double Tap Handler
+     Toggles isRotating and indicatest to the scene whether to rotate "Cube"
+     */
+    @MainActor
+    func doubleTapHandler(){
+        
+        // Flip the Boolean. Toggle it
+        isRotating = !isRotating
+        
         
     }
     
