@@ -85,6 +85,12 @@ class Assignment1: SCNScene{
         // Initialize an ObjectNode: of type Square, with length, width, and height set to 1.
         let _Cube = SCNNode(geometry: SCNBox(width: 1, height: 1,length: 1,chamferRadius: 0))
         
+        // Initialize an array of Colors.
+        let _Colors = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.cyan, UIColor.magenta]
+        
+        // Colorize each face
+        colorizeCubeFaces(_SCNObject: _Cube, _Colors: _Colors)
+        
         // Give the Object a name.
         _Cube.name = "Cube"
         
@@ -96,6 +102,33 @@ class Assignment1: SCNScene{
         
         // Attach ObjectNode to rootNode
         rootNode.addChildNode(_Cube)
+    }
+    
+    /*
+     
+     */
+    func colorizeCubeFaces(_SCNObject: SCNNode, _Colors: [UIColor]){
+        
+        var count = 0
+        
+        // Heavily Assumes there's only 6 faces to assign materials
+        for _Color in _Colors{
+            
+            
+            
+            // Initialize a temporary Material assign a color and colorize
+            var tempMaterial = SCNMaterial()
+            tempMaterial.diffuse.contents = _Color
+            
+            // Actually assign material to the cube face
+            _SCNObject.geometry?.insertMaterial(tempMaterial, at: count)
+            
+            count += 1
+            
+        }
+        
+        
+        
     }
     
 }
