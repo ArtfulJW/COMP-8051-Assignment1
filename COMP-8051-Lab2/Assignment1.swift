@@ -25,11 +25,17 @@ import SceneKit
 
 class Assignment1: SCNScene{
     
-    // Initialize Camera
+    // Member Variables
     /*
+     Initialize Camera.
      Tentatively initialize a Node then later on, Assign a SCNCamera() to this Node. Which means, it gives this Node Camera Attributes.
      */
     var _CameraNode = SCNNode()
+    
+    // Nanosecond Intervals between each Update Call
+    var _UpdateInterval = 10000
+    
+    var rotAngle = 0.0
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -52,6 +58,10 @@ class Assignment1: SCNScene{
         
         // Spawn a cube
         spawnCube(_SpawnPos: SCNVector3(0,0,0))
+        
+        Task(priority: .userInitiated){
+            await FirstUpdate()
+        }
         
     }
     /*
@@ -114,8 +124,6 @@ class Assignment1: SCNScene{
         // Heavily Assumes there's only 6 faces to assign materials
         for _Color in _Colors{
             
-            
-            
             // Initialize a temporary Material assign a color and colorize
             let tempMaterial = SCNMaterial()
             tempMaterial.diffuse.contents = _Color
@@ -127,7 +135,57 @@ class Assignment1: SCNScene{
             
         }
         
+    }
+    
+    // @MainActor essentially means to put this function on the main thread. Highly Prioritised
+    /*
+     Called on the very first graphical frame,
+     */
+    @MainActor
+    func FirstUpdate(){
         
+        // If you want, you can call any functions here, before the first update call.
+        //...
+        
+        // Actually call the Update function here
+        Update(_UpdateInterval: 10000)
+        
+        // Likewise here, you can call any functions after here.
+        // ...
+    }
+    
+    /*
+     Recursive Function that that you may use to do calculations, every frame.
+     
+     */
+    @MainActor
+    func Update(_UpdateInterval: UInt64){
+        
+        rotateObject(_Name: "Cube", _Radians: 0.0001)
+        
+        // Sleeps Update Function for given Interval in Nanoseconds
+        Task{
+            try! await Task.sleep(nanoseconds: _UpdateInterval)
+            Update(_UpdateInterval: _UpdateInterval)
+        }
+        
+    }
+    
+    // Find SCNNode by Name (String), then rotates a given object by given the given amount, in radians.
+    func rotateObject(_Name: String, _Radians: Double){
+        
+        // Find SCNNode with respective Name
+        let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
+        
+        print(_SCNObject?.rotation.y)
+        
+        rotAngle += _Radians
+        
+        if rotAngle > Double.pi {
+            rotAngle -= Double.pi
+        }
+        
+        _SCNObject?.eulerAngles = SCNVector3(0, rotAngle, 0)
         
     }
     
