@@ -10,8 +10,8 @@
 
  [x][1 marks] Create an app that runs on an iOS device (you can assume at least iOS 14.0) with a single cube shown in perspective projection. Each side of the cube should have a separate colour, as shown in class.
  [x][1 marks] Modify the app so a double-tap toggles whether the cube continuously rotates about the y-axis.
- [][1 marks] Modify the app so when the cube is not rotating the user can rotate the cube about two axes using the touch interface (single finger drag).
- [][5 marks] Modify the app so when the cube is not rotating a “pinch” (two fingers moving closer or farther away from each other) zooms in and out of the cube.
+ [x][1 marks] Modify the app so when the cube is not rotating the user can rotate the cube about two axes using the touch interface (single finger drag).
+ [x][5 marks] Modify the app so when the cube is not rotating a “pinch” (two fingers moving closer or farther away from each other) zooms in and out of the cube.
  [][5 marks] Modify the app so when the cube is not rotating dragging with two fingers moves the cube around.
  [][5 marks] Add to the app a button that, when pressed, resets the cube to a default position of (0,0,0) with a default orientation.
  [][2 marks] Add to the app a label that continuously reports the position (x,y,z) and rotation (3 angles) of the cube.
@@ -40,6 +40,9 @@ class Assignment1: SCNScene{
     
     // Drag Gesture Translation Offset
     var _DragAngle = CGSize.zero
+    
+    // Magnification amount to translate
+    var _MagnificationAmt = CGFloat.zero
     
     // Boolean Toggle for Rotating
     var isRotating = true
@@ -242,6 +245,22 @@ class Assignment1: SCNScene{
             _DragAngle = _RotAngle
         }
         isDragRotUpdated = true
+    }
+    
+    /*
+     Magnification Gesture Handler
+     */
+    @MainActor
+    func magnificationHandler(_Magnification: CGFloat){
+        _MagnificationAmt = _Magnification
+        
+        if (_Magnification < 1){
+            _MagnificationAmt = _Magnification * -1
+        }
+        
+        print(_Magnification)
+        _CameraNode.localTranslate(by: SCNVector3(0,0,_MagnificationAmt/5))
+        
     }
     
 }
