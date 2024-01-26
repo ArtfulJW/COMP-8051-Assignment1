@@ -42,13 +42,16 @@ class Assignment1: SCNScene{
     var _DragAngle = CGSize.zero
     
     // Magnification amount to translate
-    var _MagnificationAmt = CGFloat.zero
+    var _StartMagnificationAmt = CGFloat.zero
     
     // Boolean Toggle for Rotating
     var isRotating = true
     
     // Boolean indicator for whether _RotAngle is up-to-date after drag event
     var isDragRotUpdated = true
+    
+    // Indicates if User is Magnifying at the moment
+    var isMagnifying = false
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -252,14 +255,29 @@ class Assignment1: SCNScene{
      */
     @MainActor
     func magnificationHandler(_Magnification: CGFloat){
-        _MagnificationAmt = _Magnification
         
-        if (_Magnification < 1){
-            _MagnificationAmt = _Magnification * -1
+        if (isMagnifying == false){
+            
+            _StartMagnificationAmt = _Magnification
+            isMagnifying = true
+            
+        } else {
+            
+            if (_StartMagnificationAmt < _Magnification){
+                _CameraNode.localTranslate(by: SCNVector3(0,0,-(_Magnification - _StartMagnificationAmt)/5))
+            } else {
+                _CameraNode.localTranslate(by: SCNVector3(0,0,(_StartMagnificationAmt-_Magnification)/5))
+            }
+        
         }
         
-        print(_Magnification)
-        _CameraNode.localTranslate(by: SCNVector3(0,0,_MagnificationAmt/5))
+    }
+    
+    func endMagnify(){
+        isMagnifying = false
+    }
+ 
+    func magnifyCamera(){
         
     }
     
