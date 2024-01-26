@@ -53,6 +53,9 @@ class Assignment1: SCNScene{
     // Indicates if User is Magnifying at the moment
     var isMagnifying = false
     
+    // Text Label for displaying SCNObject properties
+    var SCNTextLabel = SCNText(string: "default", extrusionDepth: 0)
+    
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
         fatalError("init(coder:) has not been implemented")
@@ -71,6 +74,9 @@ class Assignment1: SCNScene{
         
         // Initialize Camera
         initCamera()
+        
+        // Initialize Text Label
+        initTextLabel()
         
         // Spawn a cube
         spawnCube(_SpawnPos: SCNVector3(0,0,0))
@@ -179,6 +185,8 @@ class Assignment1: SCNScene{
         
         rotateObject(_Name: "Cube", _Radians: 0.0001)
         
+        updateTextLabel()
+        
         // Sleeps Update Function for given Interval in Nanoseconds
         Task{
             try! await Task.sleep(nanoseconds: _UpdateInterval)
@@ -277,8 +285,36 @@ class Assignment1: SCNScene{
         isMagnifying = false
     }
     
+    @MainActor
     func twoFingerDragHandler(){
         print("FUCK")
+    }
+    
+    /*
+     Initialize the Text Label
+     */
+    func initTextLabel(){
+        let _TextNode = SCNNode(geometry: SCNTextLabel)
+        _TextNode.position = SCNVector3(0,0,0)
+        rootNode.addChildNode(_TextNode)
+    }
+    
+    /*
+     Updates Text Label and displays position, pitch, yaw, and roll
+     */
+    func updateTextLabel(){
+        
+        // Find SCNNode with respective Name
+        let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
+        
+        //SCNTextLabel.string = "Position(s): \(String(describing: _SCNObject?.position)), Rotation(s): \(String(describing: _SCNObject?.rotation))"
+        
+        SCNTextLabel.string = "\(String(describing: isRotating))"
+        
+        let _TextNode = SCNNode(geometry: SCNTextLabel)
+        _TextNode.position = SCNVector3(0,0,0)
+        rootNode.addChildNode(_TextNode)
+        
     }
     
 }
