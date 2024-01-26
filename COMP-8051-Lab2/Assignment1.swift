@@ -264,7 +264,7 @@ class Assignment1: SCNScene{
         } else {
             
             if (_StartMagnificationAmt < _Magnification){
-                _CameraNode.localTranslate(by: SCNVector3(0,0,-(_Magnification - _StartMagnificationAmt)/5))
+                _CameraNode.localTranslate(by: SCNVector3(0,0,-(_Magnification - _StartMagnificationAmt)/3))
             } else {
                 _CameraNode.localTranslate(by: SCNVector3(0,0,(_StartMagnificationAmt-_Magnification)/5))
             }
@@ -276,9 +276,9 @@ class Assignment1: SCNScene{
     func endMagnify(){
         isMagnifying = false
     }
- 
-    func magnifyCamera(){
-        
+    
+    func twoFingerDragHandler(){
+        print("FUCK")
     }
     
 }
