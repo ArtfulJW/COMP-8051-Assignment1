@@ -56,6 +56,9 @@ class Assignment1: SCNScene{
     // Text Label for displaying SCNObject properties
     var SCNTextLabel = SCNText(string: "default", extrusionDepth: 0)
     
+    // SCNNode to be parent node for SCNTextLabel
+    var _TextNode = SCNNode()
+    
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
         fatalError("init(coder:) has not been implemented")
@@ -185,7 +188,7 @@ class Assignment1: SCNScene{
         
         rotateObject(_Name: "Cube", _Radians: 0.0001)
         
-        updateTextLabel()
+        //updateTextLabel()
         
         // Sleeps Update Function for given Interval in Nanoseconds
         Task{
@@ -229,8 +232,13 @@ class Assignment1: SCNScene{
     @MainActor
     func doubleTapHandler(){
         
+        _RotAngle = _DragAngle
+        
         // Flip the Boolean. Toggle it
         isRotating = !isRotating
+        
+        // Update Text
+        updateTextLabel()
         
     }
     
@@ -274,7 +282,7 @@ class Assignment1: SCNScene{
             if (_StartMagnificationAmt < _Magnification){
                 _CameraNode.localTranslate(by: SCNVector3(0,0,-(_Magnification - _StartMagnificationAmt)/3))
             } else {
-                _CameraNode.localTranslate(by: SCNVector3(0,0,(_StartMagnificationAmt-_Magnification)/5))
+                _CameraNode.localTranslate(by: SCNVector3(0,0,(_StartMagnificationAmt-_Magnification)))
             }
         
         }
@@ -294,8 +302,22 @@ class Assignment1: SCNScene{
      Initialize the Text Label
      */
     func initTextLabel(){
-        let _TextNode = SCNNode(geometry: SCNTextLabel)
-        _TextNode.position = SCNVector3(0,0,0)
+        
+        // Init _TextNode to SCNTextLabel Values
+        _TextNode = SCNNode(geometry: SCNTextLabel)
+                        
+        // Set the Text to be relative to CameraNode, and rotated in the same direction as it.
+        _TextNode.position = _CameraNode.position
+        _TextNode.rotation = _CameraNode.rotation
+        
+        // Center (once) _TextNode. Find the center of Local X and transform by that amount.
+        centerTextLabel(_TextNode: _TextNode)
+        
+        print(_TextNode.scale)
+        _TextNode.scale = SCNVector3Make(0.1, 0.1, 0.1)
+        print(_TextNode.scale)
+        
+        //_TextNode.position = SCNVector3(0,0,0)
         rootNode.addChildNode(_TextNode)
     }
     
@@ -307,14 +329,24 @@ class Assignment1: SCNScene{
         // Find SCNNode with respective Name
         let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
         
-        //SCNTextLabel.string = "Position(s): \(String(describing: _SCNObject?.position)), Rotation(s): \(String(describing: _SCNObject?.rotation))"
-        
+        // Directly set the contained SCNText.string (which is inside my SCNNode)
         SCNTextLabel.string = "\(String(describing: isRotating))"
         
-        let _TextNode = SCNNode(geometry: SCNTextLabel)
-        _TextNode.position = SCNVector3(0,0,0)
-        rootNode.addChildNode(_TextNode)
-        
     }
+    
+    /*
+     Helper Function to center Text
+     */
+    func centerTextLabel(_TextNode: SCNNode){
+        let centerX = (_TextNode.boundingBox.max.x - _TextNode.boundingBox.min.x)/2
+        let centerY = (_TextNode.boundingBox.max.y - _TextNode.boundingBox.min.y)/2
+        
+        print(centerX)
+        print(centerY)
+        
+        _TextNode.position.x -= centerX
+        _TextNode.position.y -= centerY
+    }
+    
     
 }
