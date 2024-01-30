@@ -305,17 +305,13 @@ class Assignment1: SCNScene{
         
         // Init _TextNode to SCNTextLabel Values
         _TextNode = SCNNode(geometry: SCNTextLabel)
-                        
-        // Set the Text to be relative to CameraNode, and rotated in the same direction as it.
-        _TextNode.position = _CameraNode.position
-        _TextNode.rotation = _CameraNode.rotation
         
         // Center (once) _TextNode. Find the center of Local X and transform by that amount.
         centerTextLabel(_TextNode: _TextNode)
         
-        print(_TextNode.scale)
-        _TextNode.scale = SCNVector3Make(0.1, 0.1, 0.1)
-        print(_TextNode.scale)
+//        print(_TextNode.scale)
+//        _TextNode.scale = SCNVector3(0.1, 0.1, 0.1)
+//        print(_TextNode.scale)
         
         //_TextNode.position = SCNVector3(0,0,0)
         rootNode.addChildNode(_TextNode)
@@ -338,14 +334,29 @@ class Assignment1: SCNScene{
      Helper Function to center Text
      */
     func centerTextLabel(_TextNode: SCNNode){
-        let centerX = (_TextNode.boundingBox.max.x - _TextNode.boundingBox.min.x)/2
-        let centerY = (_TextNode.boundingBox.max.y - _TextNode.boundingBox.min.y)/2
         
-        print(centerX)
-        print(centerY)
+        // Set the Text to be relative to CameraNode, and rotated in the same direction as it.
+        _TextNode.position = _CameraNode.position
+        _TextNode.rotation = _CameraNode.rotation
         
-        _TextNode.position.x -= centerX
-        _TextNode.position.y -= centerY
+        print(_TextNode.position)
+        _TextNode.scale = SCNVector3(0.01, 0.01, 0.01)
+        
+        var _centerX = (SCNTextLabel.boundingBox.max.x - SCNTextLabel.boundingBox.min.x)/2
+        var _centerY = (SCNTextLabel.boundingBox.max.y - SCNTextLabel.boundingBox.min.y)/2
+        
+        _centerX -= SCNTextLabel.boundingBox.min.x
+        _centerY -= SCNTextLabel.boundingBox.min.y
+        
+        _TextNode.localTranslate(by: SCNVector3(0, 0, -3))
+        
+        print(_centerX)
+        print(_centerY)
+        print(_TextNode.position.x)
+        print(_TextNode.position.y)
+        print(_TextNode.position.z)
+        
+        
     }
     
     
