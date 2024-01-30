@@ -281,8 +281,16 @@ class Assignment1: SCNScene{
             
             if (_StartMagnificationAmt < _Magnification){
                 _CameraNode.localTranslate(by: SCNVector3(0,0,-(_Magnification - _StartMagnificationAmt)/3))
+                
+                // Center (once) _TextNode. Find the center of Local X and transform by that amount.
+                centerTextLabel(_TextNode: _TextNode)
+                
             } else {
                 _CameraNode.localTranslate(by: SCNVector3(0,0,(_StartMagnificationAmt-_Magnification)))
+                
+                // Center (once) _TextNode. Find the center of Local X and transform by that amount.
+                centerTextLabel(_TextNode: _TextNode)
+                
             }
         
         }
