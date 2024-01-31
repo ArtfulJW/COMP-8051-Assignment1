@@ -16,7 +16,7 @@
  [x][5 marks] Add to the app a button that, when pressed, resets the cube to a default position of (0,0,0) with a default orientation.
  [x][2 marks] Add to the app a label that continuously reports the position (x,y,z) and rotation (3 angles) of the cube.
  [x][20 marks] Add a second cube with a separate texture applied to each side, spaced far enough from the first one so the two are fully visible and close enough that both are in the camera's view. This second cube should continuously rotate, even when the first one is not auto-rotating.
- [][10 marks] Add a flashlight, ambient and diffuse light, and include toggle buttons to turn each one on and off. The effects of each of the three lights should be clearly visible.
+ [x][10 marks] Add a flashlight, ambient and diffuse light, and include toggle buttons to turn each one on and off. The effects of each of the three lights should be clearly visible.
  =======================================================================
  The code must be written using only Objective-C or Swift and C++, and all files required to build and deploy the app must be provided. Submit all your project files and any documentation to the D2L Dropbox folder as a single ZIP file with the filename A00XYZ_Asst1.zip, where XYZ is your A00 number. All required documentation (README file, code comments, etc.) must be included.
  */
