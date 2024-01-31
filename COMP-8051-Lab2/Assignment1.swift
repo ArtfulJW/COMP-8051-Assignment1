@@ -67,7 +67,16 @@ class Assignment1: SCNScene{
     // Textures to apply to second cube
     var _Textures: [UIImage?] = [UIImage(named: "amogus.jpg"),UIImage(named: "bird.jpg"),UIImage(named: "anya.png"),UIImage(named: "Stitch.jpeg"),UIImage(named: "pokemon-1.jpg"), UIImage(named: "galaxy.jpeg")]
     
-    var _SwiftUITextLabelString = ""
+    var _SCNAmbientLight = SCNNode()
+    var _SCNFlashlight = SCNNode()
+    var _SCNDiffuseLight = SCNNode()
+    var diffuseLightPos = SCNVector4(0, 0, 0, Double.pi/2)
+    var flashlightPos = 3.0
+    var flashlightAngle = 10.0
+    
+    var _AmbientLightToggle = true
+    var _DiffuseLightToggle = true
+    var _FlashlightToggle = true
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -95,6 +104,17 @@ class Assignment1: SCNScene{
         spawnCube(_SpawnPos: SCNVector3(0,0,0), _Name: "Cube")
         
         spawnCube(_SpawnPos: SCNVector3(0,-5,0), _Name: "CubeTwo",_InputTextures: _Textures)
+        
+        _SCNAmbientLight = spawnLight(_Position: SCNVector3(0,0,0), _LightType: SCNLight.LightType.ambient, _Name: "AmbientLight", _Color: UIColor.white, _Intensity: 200)
+        
+        _SCNFlashlight = spawnLight(_Position: SCNVector3(0, 5, flashlightPos), _LightType: SCNLight.LightType.spot, _Name: "DirectionalLight", _Color: UIColor.blue, _Intensity: 10000)
+        _SCNFlashlight.rotation = SCNVector4(1, 0, 0, -Double.pi/3)
+        _SCNFlashlight.light?.spotInnerAngle = 0
+        _SCNFlashlight.light?.spotOuterAngle = flashlightAngle
+        _SCNFlashlight.light?.shadowColor = UIColor.black
+        
+        _SCNDiffuseLight = spawnLight(_Position: SCNVector3(0,-4.2,0), _LightType: SCNLight.LightType.omni, _Name: "Diffuse", _Color: UIColor.green, _Intensity: 1000)
+        
         
         Task(priority: .userInitiated){
             await FirstUpdate()
@@ -303,8 +323,6 @@ class Assignment1: SCNScene{
             let SCNObjectPosition = "\(posX!),\(posY!),\(posZ!)"
             let SCNObjectRotation = "\(rotX),\(rotY),\(rotZ)"
             
-            _SwiftUITextLabelString = "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime/1000)"
-            
             updateTextLabel(_InputString: "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime/1000)")
         }
             
@@ -465,9 +483,60 @@ class Assignment1: SCNScene{
         
     }
     
-    func getSwiftUITextLabel() -> String {
-        return _SwiftUITextLabelString
+    /*
+     Helper function to create lights with specified parameters:
+     _Position : SCNVector3 - Position at which to spawn the Light
+     _LightType : String - Type of light to create
+     _Name : String - Name of SCNLight
+     _Color : UIColor - Color of Light
+        Defualt = UIColor.red
+     _Intensity : Integer - Intensity of this light source
+        Default = 100
+     
+     Returns: The created Light
+     */
+    func spawnLight(_Position : SCNVector3, _LightType : SCNLight.LightType, _Name : String = "def", _Color : UIColor = UIColor.red, _Intensity : CGFloat = 100) -> SCNNode{
+        
+        let _CreatedLight = SCNNode()
+        _CreatedLight.light = SCNLight()
+        
+        _CreatedLight.position = _Position
+        _CreatedLight.light?.type = _LightType
+        _CreatedLight.name = _Name
+        _CreatedLight.light?.color = _Color
+        _CreatedLight.light?.intensity = _Intensity
+        _CreatedLight.rotation = diffuseLightPos
+        rootNode.addChildNode(_CreatedLight)
+        
+        return _CreatedLight
     }
     
+    func toggleLight(_InputLight: SCNNode, _Toggler: inout Bool, _OriginalIntensity: CGFloat){
+        
+//        var _Toggler : Bool
+        
+//        if (_LightType == SCNLight.LightType.ambient){
+//            _Toggler = _AmbientLightToggle
+//            _AmbientLightToggle = !_AmbientLightToggle
+//        } else if (_LightType == SCNLight.LightType.spot){
+//            _Toggler = _FlashlightToggle
+//            _FlashlightToggle = !_FlashlightToggle
+//        } else {
+//            _Toggler = _DiffuseLightToggle
+//            _DiffuseLightToggle = !_DiffuseLightToggle
+//        }
+        
+        print(_Toggler)
+        
+        if (_Toggler){
+            _InputLight.light?.intensity = 0
+        } else {
+            _InputLight.light?.intensity = _OriginalIntensity
+        }
+        print(_InputLight.light?.intensity)
+        
+        _Toggler = !_Toggler
+        
+    }
     
 }
