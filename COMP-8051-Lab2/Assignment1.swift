@@ -13,7 +13,7 @@
  [x][1 marks] Modify the app so when the cube is not rotating the user can rotate the cube about two axes using the touch interface (single finger drag).
  [x][5 marks] Modify the app so when the cube is not rotating a “pinch” (two fingers moving closer or farther away from each other) zooms in and out of the cube.
  [][5 marks] Modify the app so when the cube is not rotating dragging with two fingers moves the cube around.
- [][5 marks] Add to the app a button that, when pressed, resets the cube to a default position of (0,0,0) with a default orientation.
+ [x][5 marks] Add to the app a button that, when pressed, resets the cube to a default position of (0,0,0) with a default orientation.
  [x][2 marks] Add to the app a label that continuously reports the position (x,y,z) and rotation (3 angles) of the cube.
  [x][20 marks] Add a second cube with a separate texture applied to each side, spaced far enough from the first one so the two are fully visible and close enough that both are in the camera's view. This second cube should continuously rotate, even when the first one is not auto-rotating.
  [][10 marks] Add a flashlight, ambient and diffuse light, and include toggle buttons to turn each one on and off. The effects of each of the three lights should be clearly visible.
@@ -66,6 +66,8 @@ class Assignment1: SCNScene{
     
     // Textures to apply to second cube
     var _Textures: [UIImage?] = [UIImage(named: "amogus.jpg"),UIImage(named: "bird.jpg"),UIImage(named: "anya.png"),UIImage(named: "Stitch.jpeg"),UIImage(named: "pokemon-1.jpg"), UIImage(named: "galaxy.jpeg")]
+    
+    var _SwiftUITextLabelString = ""
     
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
@@ -301,6 +303,8 @@ class Assignment1: SCNScene{
             let SCNObjectPosition = "\(posX!),\(posY!),\(posZ!)"
             let SCNObjectRotation = "\(rotX),\(rotY),\(rotZ)"
             
+            _SwiftUITextLabelString = "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime/1000)"
+            
             updateTextLabel(_InputString: "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime/1000)")
         }
             
@@ -439,6 +443,30 @@ class Assignment1: SCNScene{
         
         _TextNode.localTranslate(by: SCNVector3(-0.7, -0.5, -3))
         
+    }
+    
+    /*
+     Helper Function: Resetting the Cubes. Typically will be called from outside the Scene by a Button.
+     Zero out all Position and Rotation value back to default
+     */
+    func resetCubes(){
+        // Current Rotation Angle
+        _RotAngle = CGSize.zero
+        
+        // Drag Gesture Translation Offset
+        _DragAngle = CGSize.zero
+    
+        // Manually find the cubes and edit them directly. Find SCNNode with respective Name
+        let _SCNCube = rootNode.childNode(withName: "Cube", recursively: true)
+        let _SCNCubeTwo = rootNode.childNode(withName: "CubeTwo", recursively: true)
+        
+        _SCNCube?.position = SCNVector3(0,0,0)
+        _SCNCubeTwo?.position = SCNVector3(0,-5,0)
+        
+    }
+    
+    func getSwiftUITextLabel() -> String {
+        return _SwiftUITextLabelString
     }
     
     
