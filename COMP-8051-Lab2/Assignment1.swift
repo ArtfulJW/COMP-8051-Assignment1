@@ -61,6 +61,12 @@ class Assignment1: SCNScene{
     // SCNNode to be parent node for SCNTextLabel
     var _TextNode = SCNNode()
     
+    // Initialize an array of Colors.
+    let _Colors = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.cyan, UIColor.magenta]
+    
+    // Textures to apply to second cube
+    var _Textures: [UIImage?] = [UIImage(named: "amogus.jpg"),UIImage(named: "bird.jpg"),UIImage(named: "anya.png"),UIImage(named: "Stitch.jpeg"),UIImage(named: "pokemon-1.jpg"), UIImage(named: "galaxy.jpeg")]
+    
     // Catch if init() fails
     required init?(coder aDecoder: NSCoder){
         fatalError("init(coder:) has not been implemented")
@@ -84,7 +90,9 @@ class Assignment1: SCNScene{
         initTextLabel()
         
         // Spawn a cube
-        spawnCube(_SpawnPos: SCNVector3(0,0,0))
+        spawnCube(_SpawnPos: SCNVector3(0,0,0), _Name: "Cube")
+        
+        spawnCube(_SpawnPos: SCNVector3(0,-5,0), _Name: "CubeTwo",_InputTextures: _Textures)
         
         Task(priority: .userInitiated){
             await FirstUpdate()
@@ -118,18 +126,15 @@ class Assignment1: SCNScene{
      _SpawnPos: SCNVector3
      The position that the cube will spawn at.
      */
-    func spawnCube(_SpawnPos: SCNVector3){
+    func spawnCube(_SpawnPos: SCNVector3, _Name: String) -> SCNNode{
         // Initialize an ObjectNode: of type Square, with length, width, and height set to 1.
         let _Cube = SCNNode(geometry: SCNBox(width: 1, height: 1,length: 1,chamferRadius: 0))
-        
-        // Initialize an array of Colors.
-        let _Colors = [UIColor.red, UIColor.green, UIColor.blue, UIColor.yellow, UIColor.cyan, UIColor.magenta]
         
         // Colorize each face
         colorizeCubeFaces(_SCNObject: _Cube, _Colors: _Colors)
         
         // Give the Object a name.
-        _Cube.name = "Cube"
+        _Cube.name = _Name
         
         // Set the Cube Color to Blue
         //_Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
@@ -139,12 +144,65 @@ class Assignment1: SCNScene{
         
         // Attach ObjectNode to rootNode
         rootNode.addChildNode(_Cube)
+        
+        return _Cube
     }
     
     /*
-     
+     Overloaded spawnCube function that accepts an array of UIImages to apply to each face of the cube:
+     Spawns a cube at a given position
+     _SpawnPos: SCNVector3
+     The position that the cube will spawn at.
+     */
+    func spawnCube(_SpawnPos: SCNVector3, _Name: String, _InputTextures: [UIImage?]) -> SCNNode{
+        // Initialize an ObjectNode: of type Square, with length, width, and height set to 1.
+        let _Cube = SCNNode(geometry: SCNBox(width: 1, height: 1,length: 1,chamferRadius: 0))
+        
+        // Colorize each face
+        colorizeCubeFaces(_SCNObject: _Cube, _Colors: _InputTextures)
+        
+        // Give the Object a name.
+        _Cube.name = _Name
+        
+        // Set the Cube Color to Blue
+        //_Cube.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        
+        // Set Cube Position
+        _Cube.position = _SpawnPos
+        
+        // Attach ObjectNode to rootNode
+        rootNode.addChildNode(_Cube)
+        
+        return _Cube
+    }
+    
+    /*
+     Helper Function to apply Colors to each face of cube
      */
     func colorizeCubeFaces(_SCNObject: SCNNode, _Colors: [UIColor]){
+        
+        var count = 0
+        
+        // Heavily Assumes there's only 6 faces to assign materials
+        for _Color in _Colors{
+            
+            // Initialize a temporary Material assign a color and colorize
+            let tempMaterial = SCNMaterial()
+            tempMaterial.diffuse.contents = _Color
+            
+            // Actually assign material to the cube face
+            _SCNObject.geometry?.insertMaterial(tempMaterial, at: count)
+            
+            count += 1
+            
+        }
+        
+    }
+    
+    /*
+     Overloaded Helper Function that accepts a array of length 6 and applies them to each face of the cube
+     */
+    func colorizeCubeFaces(_SCNObject: SCNNode, _Colors: [UIImage?]){
         
         var count = 0
         
@@ -190,6 +248,8 @@ class Assignment1: SCNScene{
         
         rotateObject(_Name: "Cube", _Radians: 0.005)
         
+        rotateObject(_Name: "CubeTwo", _Radians: 0.008)
+        
         //updateTextLabel()
         
         _DeltaTime += 1
@@ -206,9 +266,9 @@ class Assignment1: SCNScene{
     func rotateObject(_Name: String, _Radians: Double){
         
         // Find SCNNode with respective Name
-        let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
+        let _SCNObject = rootNode.childNode(withName: _Name, recursively: true)
         
-        if (isRotating){
+        if (_SCNObject?.name == "CubeTwo" || (_SCNObject?.name == "Cube" && isRotating)){
             
             // Updates _RotAngle if it is behind _DragAngle, once.
             //updateRotAngle()
@@ -229,19 +289,21 @@ class Assignment1: SCNScene{
         
         //var _Str = "Position: \(_SCNObject?.position)"
         
-        let posX = _SCNObject?.position.x
-        let posY = _SCNObject?.position.y
-        let posZ = _SCNObject?.position.z
-        
-        let rotX = String(format: "%.2f", (_SCNObject?.rotation.x)!)
-        let rotY = String(format: "%.2f", (_SCNObject?.rotation.y)!)
-        let rotZ = String(format: "%.2f", (_SCNObject?.rotation.z)!)
-        
-        let SCNObjectPosition = "\(posX!),\(posY!),\(posZ!)"
-        let SCNObjectRotation = "\(rotX),\(rotY),\(rotZ)"
-        
-        updateTextLabel(_InputString: "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime)")
-                    
+        if (_SCNObject?.name == "Cube"){
+            let posX = _SCNObject?.position.x
+            let posY = _SCNObject?.position.y
+            let posZ = _SCNObject?.position.z
+            
+            let rotX = String(format: "%.2f", (_SCNObject?.rotation.x)!)
+            let rotY = String(format: "%.2f", (_SCNObject?.rotation.y)!)
+            let rotZ = String(format: "%.2f", (_SCNObject?.rotation.z)!)
+            
+            let SCNObjectPosition = "\(posX!),\(posY!),\(posZ!)"
+            let SCNObjectRotation = "\(rotX),\(rotY),\(rotZ)"
+            
+            updateTextLabel(_InputString: "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime/1000)")
+        }
+            
     }
     
     /*
@@ -376,13 +438,6 @@ class Assignment1: SCNScene{
         _centerY -= SCNTextLabel.boundingBox.min.y
         
         _TextNode.localTranslate(by: SCNVector3(-0.7, -0.5, -3))
-        
-        print(_centerX)
-        print(_centerY)
-        print(_TextNode.position.x)
-        print(_TextNode.position.y)
-        print(_TextNode.position.z)
-        
         
     }
     
