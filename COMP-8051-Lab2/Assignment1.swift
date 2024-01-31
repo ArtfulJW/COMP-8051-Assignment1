@@ -14,7 +14,7 @@
  [x][5 marks] Modify the app so when the cube is not rotating a “pinch” (two fingers moving closer or farther away from each other) zooms in and out of the cube.
  [][5 marks] Modify the app so when the cube is not rotating dragging with two fingers moves the cube around.
  [][5 marks] Add to the app a button that, when pressed, resets the cube to a default position of (0,0,0) with a default orientation.
- [][2 marks] Add to the app a label that continuously reports the position (x,y,z) and rotation (3 angles) of the cube.
+ [x][2 marks] Add to the app a label that continuously reports the position (x,y,z) and rotation (3 angles) of the cube.
  [][20 marks] Add a second cube with a separate texture applied to each side, spaced far enough from the first one so the two are fully visible and close enough that both are in the camera's view. This second cube should continuously rotate, even when the first one is not auto-rotating.
  [][10 marks] Add a flashlight, ambient and diffuse light, and include toggle buttons to turn each one on and off. The effects of each of the three lights should be clearly visible.
  =======================================================================
@@ -24,6 +24,8 @@
 import SceneKit
 
 class Assignment1: SCNScene{
+    
+    var _DeltaTime = 0
     
     // Member Variables
     /*
@@ -186,9 +188,11 @@ class Assignment1: SCNScene{
     @MainActor
     func Update(_UpdateInterval: UInt64){
         
-        rotateObject(_Name: "Cube", _Radians: 0.0001)
+        rotateObject(_Name: "Cube", _Radians: 0.005)
         
         //updateTextLabel()
+        
+        _DeltaTime += 1
         
         // Sleeps Update Function for given Interval in Nanoseconds
         Task{
@@ -222,6 +226,21 @@ class Assignment1: SCNScene{
             _SCNObject?.eulerAngles = SCNVector3(Double(_DragAngle.height/50), Double(_DragAngle.width/50), 0)
             
         }
+        
+        //var _Str = "Position: \(_SCNObject?.position)"
+        
+        let posX = _SCNObject?.position.x
+        let posY = _SCNObject?.position.y
+        let posZ = _SCNObject?.position.z
+        
+        let rotX = String(format: "%.2f", (_SCNObject?.rotation.x)!)
+        let rotY = String(format: "%.2f", (_SCNObject?.rotation.y)!)
+        let rotZ = String(format: "%.2f", (_SCNObject?.rotation.z)!)
+        
+        let SCNObjectPosition = "\(posX!),\(posY!),\(posZ!)"
+        let SCNObjectRotation = "\(rotX),\(rotY),\(rotZ)"
+        
+        updateTextLabel(_InputString: "Position: \(SCNObjectPosition)\nRotation: \(SCNObjectRotation)\n\(_DeltaTime)")
                     
     }
     
@@ -238,7 +257,7 @@ class Assignment1: SCNScene{
         isRotating = !isRotating
         
         // Update Text
-        updateTextLabel()
+        //updateTextLabel()
         
     }
     
@@ -328,13 +347,13 @@ class Assignment1: SCNScene{
     /*
      Updates Text Label and displays position, pitch, yaw, and roll
      */
-    func updateTextLabel(){
+    func updateTextLabel(_InputString: String){
         
         // Find SCNNode with respective Name
         let _SCNObject = rootNode.childNode(withName: "Cube", recursively: true)
         
         // Directly set the contained SCNText.string (which is inside my SCNNode)
-        SCNTextLabel.string = "\(String(describing: isRotating))"
+        SCNTextLabel.string = "\(String(describing: _InputString))"
         
     }
     
@@ -356,7 +375,7 @@ class Assignment1: SCNScene{
         _centerX -= SCNTextLabel.boundingBox.min.x
         _centerY -= SCNTextLabel.boundingBox.min.y
         
-        _TextNode.localTranslate(by: SCNVector3(0, 0, -3))
+        _TextNode.localTranslate(by: SCNVector3(-0.7, -0.5, -3))
         
         print(_centerX)
         print(_centerY)
