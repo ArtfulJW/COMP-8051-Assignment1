@@ -2,7 +2,7 @@
 Name: Jay Wang
 
 To run my Assignment 1, please follow these steps.
-1. Upon running my project, you should see, in bold, "COMP 8051", with 8 Labs under it. At the bottom, there should be a button with blue text wit hte words "Assignment 1". Please click it.
+1. Upon building and running my project, you should see, in bold, "COMP 8051", with 8 Labs under it. At the bottom, there should be a button with blue text with the words "Assignment 1". Please click it.
 2. Upon clicking "Assignment 1" Button at the bottom, the corresponding scene that fulfills the requirements for this Assignment will run.
 3. You should now see the corresponding scene.
 
