@@ -32,6 +32,7 @@
 		4F3C7A912B619FBF004ED8A7 /* Lab07.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab07.swift; path = "../../../../Notes/Week 3/Lab07.swift"; sourceTree = "<group>"; };
 		4F3C7A922B619FBF004ED8A7 /* Lab08.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab08.swift; path = "../../../../Notes/Week 3/Lab08.swift"; sourceTree = "<group>"; };
 		4F3C7A932B619FBF004ED8A7 /* Lab06.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab06.swift; path = "../../../../Notes/Week 3/Lab06.swift"; sourceTree = "<group>"; };
+		4FAB25A02B6B185A0019E22B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4FE3FCC92B5B1797007B17FD /* COMP-8051-Lab2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "COMP-8051-Lab2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FE3FCCC2B5B1797007B17FD /* COMP_8051_Lab2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COMP_8051_Lab2App.swift; sourceTree = "<group>"; };
 		4FE3FCD02B5B1797007B17FD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -85,6 +86,7 @@
 				4F34A9122B61DFFA00AF4205 /* Assignment1.swift */,
 				4FE3FCD22B5B1798007B17FD /* Assets.xcassets */,
 				4FE3FCD42B5B1798007B17FD /* Preview Content */,
+				4FAB25A02B6B185A0019E22B /* README.md */,
 			);
 			path = "COMP-8051-Lab2";
 			sourceTree = "<group>";

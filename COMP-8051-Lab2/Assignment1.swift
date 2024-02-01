@@ -511,6 +511,9 @@ class Assignment1: SCNScene{
         return _CreatedLight
     }
     
+    /*
+     Generic Helper Function to toggle off the given lights
+     */
     func toggleLight(_InputLight: SCNNode, _Toggler: inout Bool, _OriginalIntensity: CGFloat){
         
 //        var _Toggler : Bool
