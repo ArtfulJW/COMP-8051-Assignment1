@@ -21,7 +21,6 @@
 		4F3C7A892B619DB6004ED8A7 /* Lab04.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A872B619DB5004ED8A7 /* Lab04.swift */; };
 		4F3C7A8A2B619DB6004ED8A7 /* Lab05.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A882B619DB6004ED8A7 /* Lab05.swift */; };
 		4F3C7A8E2B619E0B004ED8A7 /* Lab03.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A8D2B619E0B004ED8A7 /* Lab03.swift */; };
-		4F3C7A902B619FAE004ED8A7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A8F2B619FAE004ED8A7 /* ContentView.swift */; };
 		4F3C7A942B619FBF004ED8A7 /* Lab07.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A912B619FBF004ED8A7 /* Lab07.swift */; };
 		4F3C7A952B619FBF004ED8A7 /* Lab08.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A922B619FBF004ED8A7 /* Lab08.swift */; };
 		4F3C7A962B619FBF004ED8A7 /* Lab06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3C7A932B619FBF004ED8A7 /* Lab06.swift */; };
@@ -29,6 +28,7 @@
 		4FE3FCD12B5B1797007B17FD /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3FCD02B5B1797007B17FD /* Item.swift */; };
 		4FE3FCD32B5B1798007B17FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE3FCD22B5B1798007B17FD /* Assets.xcassets */; };
 		4FE3FCD62B5B1798007B17FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FE3FCD52B5B1798007B17FD /* Preview Assets.xcassets */; };
+		4FFB23F22B7D14170008A504 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFB23F12B7D14170008A504 /* ContentView.swift */; };
 		4FFE5E8A2B5B1876000ED59C /* Lab02.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE5E882B5B1876000ED59C /* Lab02.swift */; };
 		4FFE5E8C2B5B18A7000ED59C /* Lab01.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFE5E8B2B5B18A7000ED59C /* Lab01.swift */; };
 /* End PBXBuildFile section */
@@ -48,7 +48,6 @@
 		4F3C7A872B619DB5004ED8A7 /* Lab04.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab04.swift; sourceTree = "<group>"; };
 		4F3C7A882B619DB6004ED8A7 /* Lab05.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lab05.swift; sourceTree = "<group>"; };
 		4F3C7A8D2B619E0B004ED8A7 /* Lab03.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab03.swift; path = "../../../../Notes/Week 2/Lab03.swift"; sourceTree = "<group>"; };
-		4F3C7A8F2B619FAE004ED8A7 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = "../../../../Notes/Week 3/ContentView.swift"; sourceTree = "<group>"; };
 		4F3C7A912B619FBF004ED8A7 /* Lab07.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab07.swift; path = "../../../../Notes/Week 3/Lab07.swift"; sourceTree = "<group>"; };
 		4F3C7A922B619FBF004ED8A7 /* Lab08.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab08.swift; path = "../../../../Notes/Week 3/Lab08.swift"; sourceTree = "<group>"; };
 		4F3C7A932B619FBF004ED8A7 /* Lab06.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab06.swift; path = "../../../../Notes/Week 3/Lab06.swift"; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 		4FE3FCD02B5B1797007B17FD /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4FE3FCD22B5B1798007B17FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FE3FCD52B5B1798007B17FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4FFB23F12B7D14170008A504 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4FFE5E882B5B1876000ED59C /* Lab02.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab02.swift; path = "../../../../Notes/Week 2/Lab02.swift"; sourceTree = "<group>"; };
 		4FFE5E8B2B5B18A7000ED59C /* Lab01.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lab01.swift; path = "../../../../Notes/Week 1/Lab01.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,7 +94,7 @@
 			children = (
 				4FE3FCCC2B5B1797007B17FD /* COMP_8051_Lab2App.swift */,
 				4FE3FCD02B5B1797007B17FD /* Item.swift */,
-				4F3C7A8F2B619FAE004ED8A7 /* ContentView.swift */,
+				4FFB23F12B7D14170008A504 /* ContentView.swift */,
 				4FFE5E8B2B5B18A7000ED59C /* Lab01.swift */,
 				4FFE5E882B5B1876000ED59C /* Lab02.swift */,
 				4F3C7A8D2B619E0B004ED8A7 /* Lab03.swift */,
@@ -210,12 +210,12 @@
 			files = (
 				4F34A9132B61DFFA00AF4205 /* Assignment1.swift in Sources */,
 				4F3C7A8E2B619E0B004ED8A7 /* Lab03.swift in Sources */,
+				4FFB23F22B7D14170008A504 /* ContentView.swift in Sources */,
 				4FE3FCD12B5B1797007B17FD /* Item.swift in Sources */,
 				4FE3FCCD2B5B1797007B17FD /* COMP_8051_Lab2App.swift in Sources */,
 				4F3C7A942B619FBF004ED8A7 /* Lab07.swift in Sources */,
 				4F31333D2B76AA5E006C97A8 /* Lab09.swift in Sources */,
 				4F3C7A8A2B619DB6004ED8A7 /* Lab05.swift in Sources */,
-				4F3C7A902B619FAE004ED8A7 /* ContentView.swift in Sources */,
 				4FFE5E8C2B5B18A7000ED59C /* Lab01.swift in Sources */,
 				4FFE5E8A2B5B1876000ED59C /* Lab02.swift in Sources */,
 				4F3C7A952B619FBF004ED8A7 /* Lab08.swift in Sources */,
